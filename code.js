@@ -9,11 +9,31 @@ const boardModel = [
     [null, null, null, null, null, null, null],
 ];
 
+<<<<<<< HEAD
 let player = null;
 
 function addDiscToBoard() { //Medium difficulty
     // STUB
 }
+=======
+let player = 1;
+
+function addDiscToBoard() { //Medium difficulty
+    let slotPlace = document.getElementsByTagName("td")
+    // Create a for loop tht loops thru the td
+    for (let i = 0; i < slotPlace.length; i++) {
+        slotPlace[i].addEventListener("click", (event) => {
+            console.log(
+                `${event.target.parentElement.rowIndex}, ${event.target.cellIndex}}`
+            )
+// line 18 - 20 code was inspire by Krystal Briggs
+        })
+
+        }
+    }
+console.log(addDiscToBoard())
+
+>>>>>>> Master_Chief
 
 // Win condition
 // Needs to know what slot a disc is played in, and what player did it. (parameters: slot/location, player)
@@ -87,15 +107,23 @@ console.log(checkForWin())
 
 // When a player clicks empty slot, disc appears. Then program alternates to the other player.
 function changePlayer() {
+<<<<<<< HEAD
     if (player === null) {
         player = null;
     } else if (player === null) {
         player = null;
+=======
+    if (player === 1) {
+        player = 1;
+    } else if (player === 2) {
+        player = 2;
+>>>>>>> Master_Chief
     }
     // TO-DO: Render on the page to say whose turn it is.
 }
 
 function handleGame() { // Medium
+<<<<<<< HEAD
     // STUB
 }
 
@@ -104,6 +132,13 @@ function handleGame() { // Medium
 //   const slot = getElementsByClassName(slot) 
 //   document
 // }
+=======
+// this function is another add event listener function that renders everything unto the page
+    
+    
+}
+
+>>>>>>> Master_Chief
 
 function reset() {
     
