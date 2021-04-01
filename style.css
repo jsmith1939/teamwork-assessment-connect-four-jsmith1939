@@ -1,55 +1,5 @@
 /* Write your CSS Here. */
 table{
-<<<<<<< HEAD
-    border:1px solid black;
-    display: flex;
-     
-  flex-wrap:wrap; 
-   height:300px; 
-   width: 300px; 
-   background:blue; 
-    margin: auto;
-}
-        
-   .slot{
-    
-    height:40px; 
-width:40px; 
-margin:3px;
-border-radius:20px;
-background:white
-
-    
-   } 
-    
-    
-    body{
-    color:red;
-    
-    }
-       
- .reset{
-    background: red; 
-    width: 200px; 
-    height: 200px; 
-    position: fixed; 
-    top: 100px; 
-    left: 100px; 
-    display: none; 
-    justify-content: center; 
-    align-items: center; 
-    flex-direction: column; 
-    }
-.button {
-
-   width: 50px;
-   height: 50px;
-   margin-left: 500px;
-   color: red;
-}
-
- 
-=======
    border:1px solid black;
    display: flex;
     
@@ -90,5 +40,10 @@ background:white
    flex-direction: column; 
    }
 
-
->>>>>>> Master_Chief
+ 
+.player-one { 
+background:red;
+}
+.player-two { 
+background:black 
+}
