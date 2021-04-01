@@ -81,40 +81,76 @@ function checkForWin(slot) {
     }
 
     // Diagonal
+    function checkForwardDiagonal(start) {
+        let counter = 0;
+        let originSpace = {x: start.x, y: start.y}
+        while (originSpace.x > 0 || originSpace.y < 5) {
+            originSpace.x--;
+            originSpace.y++;
+        }
+        while (originSpace.x < 6 || originSpace.y > 0) {
+            originSpace.x++;
+            originSpace.y--;
+            if (board[originSpace.y] && board[originSpace.y][originSpace.x] === player) {
+                counter++;
+                if (counter >= 4) {
+                    return true;
+                }
+            } else if (board[originSpace.y] && board[originSpace.y][originSpace.x] !== player) {
+                counter = 0;
+            }
+        }
+        return false;
+    }
+    function checkBackwardDiagonal(start) {
+        let counter = 0;
+        let originSpace = {x: start.x, y: start.y}
+        while (originSpace.x > 0 || originSpace.y > 0) {
+            originSpace.x--;
+            originSpace.y--;
+        }
+        while (originSpace.x < 6 || originSpace.y < 5) {
+            originSpace.x++;
+            originSpace.y++;
+            if (board[originSpace.y] && board[originSpace.y][originSpace.x] === player) {
+                counter++;
+                if (counter >= 4) {
+                    return true;
+                }
+            } else if (board[originSpace.y] && board[originSpace.y][originSpace.x] !== player) {
+                counter = 0;
+            }
+        }
+        return false;
+    }
 
     // Return true if player wins, else return false.
     if (
         checkHorizontal() 
         || checkVertical()
-        // || checkDiagonal() // Uncomment when checkDiagonal is finished.
+        || checkForwardDiagonal()
+        || checkBackwardDiagonal()
     ) {
         return true;
+    } else {
+        return false;
     }
 }
 
-// Create a function that checks for a tie
-function checkTie() { // Easy
-
-}
-console.log(checkForWin())
-
-// When a player clicks empty slot, disc appears. Then program alternates to the other player.
-function changePlayer() {
-    if (player === 1) {
-        player = 1;
-    } else if (player === 2) {
-        player = 2;
+function checkTie() {
+    for (let i = 0; i < boardModel.length; i++) {
+        for (let index = 0; index < boardModel[i].length; i++) {
+            if (boardModel[i][index] === null) {
+                return false;
+            }
+        }
     }
-    // TO-DO: Render on the page to say whose turn it is.
-}
-
-function handleGame() { // Medium
-// this function is another add event listener function that renders everything unto the page
-    
-    
+    return true;
 }
 
 
+let button = document.querySelector('.button');
+button.addEventListener('click', reset);
 function reset() {
-    
+    window.location.reload();
 }
