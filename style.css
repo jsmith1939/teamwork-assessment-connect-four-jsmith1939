@@ -61,18 +61,7 @@ background:white
    
    }
       
-.reset{
-   background: red; 
-   width: 200px; 
-   height: 200px; 
-   position: fixed; 
-   top: 100px; 
-   left: 100px; 
-   display: none; 
-   justify-content: center; 
-   align-items: center; 
-   flex-direction: column; 
-   }
 
 
-/* >>>>>>> Master_Chief
+
+/* >>>>>>> jeff_way
