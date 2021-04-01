@@ -47,4 +47,9 @@ background:white
    color: red;
 }
 
- 
+.player-one { 
+   background:red;
+   }
+   .player-two { 
+   background:yellow; 
+   }
