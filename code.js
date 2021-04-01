@@ -9,13 +9,7 @@ const boardModel = [
     [null, null, null, null, null, null, null],
 ];
 
-<<<<<<< HEAD
-let player = null;
 
-function addDiscToBoard() { //Medium difficulty
-    // STUB
-}
-=======
 let player = 1;
 
 function addDiscToBoard() { //Medium difficulty
@@ -33,7 +27,6 @@ function addDiscToBoard() { //Medium difficulty
     }
 console.log(addDiscToBoard())
 
->>>>>>> Master_Chief
 
 // Win condition
 // Needs to know what slot a disc is played in, and what player did it. (parameters: slot/location, player)
@@ -107,38 +100,20 @@ console.log(checkForWin())
 
 // When a player clicks empty slot, disc appears. Then program alternates to the other player.
 function changePlayer() {
-<<<<<<< HEAD
-    if (player === null) {
-        player = null;
-    } else if (player === null) {
-        player = null;
-=======
     if (player === 1) {
         player = 1;
     } else if (player === 2) {
         player = 2;
->>>>>>> Master_Chief
     }
     // TO-DO: Render on the page to say whose turn it is.
 }
 
 function handleGame() { // Medium
-<<<<<<< HEAD
-    // STUB
-}
-
-// Create an event listener function that recognize a mouse click
-// function slotClick("click", callback) {
-//   const slot = getElementsByClassName(slot) 
-//   document
-// }
-=======
 // this function is another add event listener function that renders everything unto the page
     
     
 }
 
->>>>>>> Master_Chief
 
 function reset() {
     
