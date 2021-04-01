@@ -1,31 +1,43 @@
 /* Write your CSS Here. */
-#table{
-    border:1px solid black;
-    display: flex;
-     
-  flex-wrap:wrap; 
-   height:500px; 
-   width:500px; 
-   background:blue; 
-    margin-right: 4400px;
+table{
+   border:1px solid black;
+   display: flex;
+    
+ flex-wrap:wrap; 
+  height:300px; 
+  width: 300px; 
+  background:blue; 
+   margin: auto;
 }
-        
-   .column{
-    
-    height:40px; 
-    width:40px; 
-    margin:3px;
-    border-radius:20px; 
-   } 
-    
-    
-    body{
-    color:red
-    
-    }
-    .Solt{
-       background:white
-        
-    }
-   
        
+  .slot{
+   
+   height:40px; 
+width:40px; 
+margin:3px;
+border-radius:20px;
+background:white
+
+   
+  } 
+   
+   
+   body{
+   color:red;
+   
+   }
+      
+.reset{
+   background: red; 
+   width: 200px; 
+   height: 200px; 
+   position: fixed; 
+   top: 100px; 
+   left: 100px; 
+   display: none; 
+   justify-content: center; 
+   align-items: center; 
+   flex-direction: column; 
+   }
+
+
