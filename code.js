@@ -148,6 +148,34 @@ function checkTie() {
     return true;
 }
 
+// This functions switches between players
+function changePlayer() {
+    if (player === 1) {
+        player === 2
+    } else {
+        player === 1
+    }
+}
+
+// Create function, that recognize when a column is click to run everything
+function handleGame() {
+    // Create a variable for the column that was clicked
+    let selectedColumn = document.getElementsByTagName("tr")
+    for (let i = 0; i < selectedColumn.length; i++) {
+        selectedColumn[i].addEventListener("click", (event) => {
+            console.log(
+                `${event.target.cellIndex}`
+            )
+        })
+
+    }
+    addDiscToBoard(selectedColumn);
+    checkForWin();
+    checkTie()
+    changePlayer()
+    
+}
+console.log(handleGame())
 
 let button = document.querySelector('.button');
 button.addEventListener('click', reset);
