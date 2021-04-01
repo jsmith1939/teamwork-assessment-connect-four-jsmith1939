@@ -9,17 +9,7 @@ const boardModel = [
     [null, null, null, null, null, null, null]
 ];
 
-let player1 = input("Let P1 enter name: " + player1)
-let player2 = input("Let P2 enter name: " + player2)
-
-
-// This function determines who turn it is
-let playersTurn = function(slot) {
-    // Create a conditions for each player
-    if (player1 === 1) {
-        document.getElementsByClassName(slot).
-    }
-}
+let player = 1;
 
 // When a player clicks empty slot, disc appears. Then program alternates to the other player.
 function changePlayer() {
@@ -67,23 +57,75 @@ function checkForWin(slot, player) {
     }
 
     // Diagonal
-    function checkDiagonal() {
-        // Stub
+    function checkForwardDiagonal(start) {
+        let counter = 0;
+        let originSpace = {x: start.x, y: start.y}
+        while (originSpace.x > 0 || originSpace.y < 5) {
+            originSpace.x--;
+            originSpace.y++;
+        }
+        while (originSpace.x < 6 || originSpace.y > 0) {
+            originSpace.x++;
+            originSpace.y--;
+            if (board[originSpace.y] && board[originSpace.y][originSpace.x] === player) {
+                counter++;
+                if (counter >= 4) {
+                    return true;
+                }
+            } else if (board[originSpace.y] && board[originSpace.y][originSpace.x] !== player) {
+                counter = 0;
+            }
+        }
+        return false;
     }
-    // Diagonal #2? The code for both diagonals will basically be the same (incrementing two directions at a time), but one will need to decrement one direction instead.
-    
+    function checkBackwardDiagonal(start) {
+        let counter = 0;
+        let originSpace = {x: start.x, y: start.y}
+        while (originSpace.x > 0 || originSpace.y > 0) {
+            originSpace.x--;
+            originSpace.y--;
+        }
+        while (originSpace.x < 6 || originSpace.y < 5) {
+            originSpace.x++;
+            originSpace.y++;
+            if (board[originSpace.y] && board[originSpace.y][originSpace.x] === player) {
+                counter++;
+                if (counter >= 4) {
+                    return true;
+                }
+            } else if (board[originSpace.y] && board[originSpace.y][originSpace.x] !== player) {
+                counter = 0;
+            }
+        }
+        return false;
+    }
+
     // Return true if player wins, else return false.
     if (
         checkHorizontal() 
-        // && checkVertical() // Uncomment when checkVertical is finished.
-        // && checkDiagonal() // Uncomment when checkDiagonal is finished.
+        || checkVertical()
+        || checkForwardDiagonal()
+        || checkBackwardDiagonal()
     ) {
         return true;
+    } else {
+        return false;
     }
 }
 
-// Create an event listener function that recognize a mouse click
-function slotClick.addEventListener("click", callback) {
-  const slot = getElementsByClassName(slot)
-  
+function checkTie() {
+    for (let i = 0; i < boardModel.length; i++) {
+        for (let index = 0; index < boardModel[i].length; i++) {
+            if (boardModel[i][index] === null) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+let button = document.querySelector('.button');
+button.addEventListener('click', reset);
+function reset() {
+    window.location.reload();
 }
