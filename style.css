@@ -7,7 +7,7 @@ table{
   flex-wrap:wrap; 
    height:300px; 
    width: 300px; 
-   background:blue; 
+   background-color:blue; 
     margin: auto;
 }
         
@@ -37,20 +37,20 @@ background:white
 }
 
 .player-one { 
-   background:red;
+   background-color:red;
    }
    .player-two { 
-   background:black; 
+   background-color:black; 
    }
  
        
   .slot{
    
-   height:40px; 
+height:40px; 
 width:40px; 
 margin:3px;
 border-radius:20px;
-background:white
+background-color:white
 
    
   } 
