@@ -81,7 +81,14 @@ function checkForWin(slot) {
 
 // Create a function that checks for a tie
 function checkTie() { // Easy
-
+    for (let i = 0; i < boardModel.length; i++) {
+        for (let index = 0; index < boardModel[i].length; i++) {
+            if (boardModel[i][index] === null) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 console.log(checkForWin())
 
