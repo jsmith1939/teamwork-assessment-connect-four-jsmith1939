@@ -60,8 +60,22 @@ background-color:white
    color:red;
    
    }
-      
 
+#player-turn {
+   width: 200px;
+   margin: auto;
+}
 
+#result-display {
+   width: 160px;
+   height: 40px;
+   margin: 20px auto;
+   padding: 30px;
+   background-color: black;
+   text-align: center;
+   display: none;
+}
 
-/* >>>>>>> jeff_way
+#result-display button {
+   margin: 50px;
+}
