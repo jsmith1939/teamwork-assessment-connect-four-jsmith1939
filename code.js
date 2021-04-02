@@ -9,11 +9,24 @@ const boardModel = [
     [null, null, null, null, null, null, null],
 ];
 
-let player = null;
+
+let player = 1;
 
 function addDiscToBoard() { //Medium difficulty
-    // STUB
-}
+    let slotPlace = document.getElementsByTagName("td")
+    // Create a for loop tht loops thru the td
+    for (let i = 0; i < slotPlace.length; i++) {
+        slotPlace[i].addEventListener("click", (event) => {
+            console.log(
+                `${event.target.parentElement.rowIndex}, ${event.target.cellIndex}}`
+            )
+// line 18 - 20 code was inspire by Krystal Briggs
+        })
+
+        }
+    }
+console.log(addDiscToBoard())
+
 
 // Win condition
 // Needs to know what slot a disc is played in, and what player did it. (parameters: slot/location, player)
@@ -68,19 +81,63 @@ function checkForWin(slot) {
     }
 
     // Diagonal
+    function checkForwardDiagonal(start) {
+        let counter = 0;
+        let originSpace = {x: start.x, y: start.y}
+        while (originSpace.x > 0 || originSpace.y < 5) {
+            originSpace.x--;
+            originSpace.y++;
+        }
+        while (originSpace.x < 6 || originSpace.y > 0) {
+            originSpace.x++;
+            originSpace.y--;
+            if (board[originSpace.y] && board[originSpace.y][originSpace.x] === player) {
+                counter++;
+                if (counter >= 4) {
+                    return true;
+                }
+            } else if (board[originSpace.y] && board[originSpace.y][originSpace.x] !== player) {
+                counter = 0;
+            }
+        }
+        return false;
+    }
+    function checkBackwardDiagonal(start) {
+        let counter = 0;
+        let originSpace = {x: start.x, y: start.y}
+        while (originSpace.x > 0 || originSpace.y > 0) {
+            originSpace.x--;
+            originSpace.y--;
+        }
+        while (originSpace.x < 6 || originSpace.y < 5) {
+            originSpace.x++;
+            originSpace.y++;
+            if (board[originSpace.y] && board[originSpace.y][originSpace.x] === player) {
+                counter++;
+                if (counter >= 4) {
+                    return true;
+                }
+            } else if (board[originSpace.y] && board[originSpace.y][originSpace.x] !== player) {
+                counter = 0;
+            }
+        }
+        return false;
+    }
 
     // Return true if player wins, else return false.
     if (
         checkHorizontal() 
         || checkVertical()
-        // || checkDiagonal() // Uncomment when checkDiagonal is finished.
+        || checkForwardDiagonal()
+        || checkBackwardDiagonal()
     ) {
         return true;
+    } else {
+        return false;
     }
 }
 
-// Create a function that checks for a tie
-function checkTie() { // Easy
+function checkTie() {
     for (let i = 0; i < boardModel.length; i++) {
         for (let index = 0; index < boardModel[i].length; i++) {
             if (boardModel[i][index] === null) {
@@ -90,28 +147,38 @@ function checkTie() { // Easy
     }
     return true;
 }
-console.log(checkForWin())
 
-// When a player clicks empty slot, disc appears. Then program alternates to the other player.
+// This functions switches between players
 function changePlayer() {
-    if (player === null) {
-        player = null;
-    } else if (player === null) {
-        player = null;
+    if (player === 1) {
+        player === 2
+    } else {
+        player === 1
     }
-    // TO-DO: Render on the page to say whose turn it is.
 }
 
-function handleGame() { // Medium
-    // STUB
-}
+// Create function, that recognize when a column is click to run everything
+function handleGame() {
+    // Create a variable for the column that was clicked
+    let selectedColumn = document.getElementsByTagName("tr")
+    for (let i = 0; i < selectedColumn.length; i++) {
+        selectedColumn[i].addEventListener("click", (event) => {
+            console.log(
+                `${event.target.cellIndex}`
+            )
+        })
 
-// Create an event listener function that recognize a mouse click
-// function slotClick("click", callback) {
-//   const slot = getElementsByClassName(slot) 
-//   document
-// }
-
-function reset() {
+    }
+    addDiscToBoard(selectedColumn);
+    checkForWin();
+    checkTie()
+    changePlayer()
     
+}
+console.log(handleGame())
+
+let button = document.querySelector('.button');
+button.addEventListener('click', reset);
+function reset() {
+    window.location.reload();
 }
