@@ -12,33 +12,38 @@ const boardModel = [
 
 let player = 1;
 
-function addDiscToBoard() { //Medium difficulty
-    let slotPlace = document.getElementsByTagName("td")
-    // Create a for loop tht loops thru the td
-    for (let i = 0; i < slotPlace.length; i++) {
-        slotPlace[i].addEventListener("click", (event) => {
-            console.log(
-                `${event.target.parentElement.rowIndex}, ${event.target.cellIndex}}`
-            )
-// line 18 - 20 code was inspire by Krystal Briggs
-        })
-
+function addDiscToBoard(column) {
+    let slot = {
+        x: column,
+        y: null
+    }
+    for (i = boardModel.length - 1; i >= 0; i--) {
+        if (boardModel[i][column] === null) {
+            slot.y = i;
+            break;
         }
     }
-console.log(addDiscToBoard())
-
+    if (slot.y === null) {
+        console.log('Too full.');
+    } else {
+        if (player === 1) {
+            event.target.parentElement.parentElement.children[slot.y].children[column].style.backgroundColor = 'red';
+            boardModel[slot.y][slot.x] = 1;
+        } else {
+            event.target.parentElement.parentElement.children[slot.y].children[column].style.backgroundColor = 'black';
+            boardModel[slot.y][slot.x] = 2;
+        }
+    }
+    return slot.y;
+}
 
 // Win condition
-// Needs to know what slot a disc is played in, and what player did it. (parameters: slot/location, player)
-// Needs to check horizontally, vertically, and diagonally (both diagonal directions different functions?).
-// Has to be able to check all possible spaces, not just from the location provided in the parameters.
 function checkForWin(slot) {
-    // Horizontal
     function checkHorizontal() {
         // Have a way to determine how many discs are connected.
         let counter = 0; // This will increment up every time a player's disc is in the row.
 
-        let row = 0; // This will come from whatever slot is passed in. (Not necessary, but helpful)
+        let row = slot.y; // This will come from whatever slot is passed in. (Not necessary, but helpful)
 
         // Since this is horizontal, we can check every element in one sub-array of the boardModel.
         for (let i = 0; i < boardModel[row].length; i++) {
@@ -56,21 +61,16 @@ function checkForWin(slot) {
         return false; // If the loop went through all of the possibilities and never got the counter to 4, then there was no horizontal win condition met.
     }
 
-    // Vertical
     function checkVertical() {
         // Same exact idea as horizontal, but it needs to add the extra dimension of arrays (so it's looping through the boardModel and checking a specific element inside instead of just looping through a single array.)
-        // Stub
-        let column = 0 // This represents the vertical slots in the game
-        let counter = 0 // This counts the how many of the same pieces in a row going up
+        let column = slot.x // This represents the vertical slots in the game
+        let counter = 0; // This counts the how many of the same pieces in a row going up
         
         // Create a loop that goes thru the board model tha checks every element
         for (let i = 0; i < boardModel.length; i++) {
             if (boardModel[i][column] === player) {
                 counter++;
-                console.log(boardModel[i][column])
-                console.log(counter)
                 if (counter >= 4) {
-                    console.log("We Have A Winner !")
                     return true
                 }    
             } else {
@@ -80,57 +80,54 @@ function checkForWin(slot) {
         } 
     }
 
-    // Diagonal
-    function checkForwardDiagonal(start) {
+    function checkForwardDiagonal() {
         let counter = 0;
-        let originSpace = {x: start.x, y: start.y}
-        while (originSpace.x > 0 || originSpace.y < 5) {
+        let originSpace = {x: slot.x, y: slot.y};
+        while (originSpace.x > 0 && originSpace.y < 5) {
             originSpace.x--;
             originSpace.y++;
         }
-        while (originSpace.x < 6 || originSpace.y > 0) {
-            originSpace.x++;
-            originSpace.y--;
-            if (board[originSpace.y] && board[originSpace.y][originSpace.x] === player) {
+        while (originSpace.y >= 0) {
+            if (boardModel[originSpace.y] && boardModel[originSpace.y][originSpace.x] === player) {
                 counter++;
                 if (counter >= 4) {
+                    console.log('diagonal win')
                     return true;
                 }
-            } else if (board[originSpace.y] && board[originSpace.y][originSpace.x] !== player) {
+            } else if (boardModel[originSpace.y] && boardModel[originSpace.y][originSpace.x] !== player) {
                 counter = 0;
             }
+            originSpace.x++;
+            originSpace.y--;
         }
         return false;
     }
-    function checkBackwardDiagonal(start) {
+
+    function checkBackwardDiagonal() {
         let counter = 0;
-        let originSpace = {x: start.x, y: start.y}
-        while (originSpace.x > 0 || originSpace.y > 0) {
-            originSpace.x--;
-            originSpace.y--;
-        }
-        while (originSpace.x < 6 || originSpace.y < 5) {
+        let originSpace = slot;
+        while (originSpace.x < 6 && originSpace.y < 5) {
             originSpace.x++;
             originSpace.y++;
-            if (board[originSpace.y] && board[originSpace.y][originSpace.x] === player) {
+        }
+        while (originSpace.y >= 0) {
+            if (boardModel[originSpace.y] && boardModel[originSpace.y][originSpace.x] === player) {
                 counter++;
                 if (counter >= 4) {
+                    console.log('diagonal win')
                     return true;
                 }
-            } else if (board[originSpace.y] && board[originSpace.y][originSpace.x] !== player) {
+            } else if (boardModel[originSpace.y] && boardModel[originSpace.y][originSpace.x] !== player) {
                 counter = 0;
             }
+            originSpace.x--;
+            originSpace.y--;
         }
         return false;
     }
 
     // Return true if player wins, else return false.
-    if (
-        checkHorizontal() 
-        || checkVertical()
-        || checkForwardDiagonal()
-        || checkBackwardDiagonal()
-    ) {
+    if (checkHorizontal() || checkVertical() || checkForwardDiagonal() || checkBackwardDiagonal()) {
         return true;
     } else {
         return false;
@@ -139,43 +136,62 @@ function checkForWin(slot) {
 
 function checkTie() {
     for (let i = 0; i < boardModel.length; i++) {
-        for (let index = 0; index < boardModel[i].length; i++) {
-            if (boardModel[i][index] === null) {
+        for (let j = 0; j < boardModel[i].length; j++) {
+            if (boardModel[i][j] === null) {
                 return false;
             }
         }
     }
+    console.log('tie')
     return true;
+}
+
+function displayResult(win) {
+    let displayWindow = document.getElementById('result-display');
+    if (win) {
+        displayWindow.innerHTML = `Player ${player} wins!`;
+    } else {
+        displayWindow.innerHTML = `It's a tie!`;
+    }
+    displayWindow.style.display = 'block';
 }
 
 // This functions switches between players
 function changePlayer() {
+    let playerTurn = document.getElementById('player-turn');
     if (player === 1) {
-        player === 2
+        player++; // Changed this to increment and decrement because for some reason just setting the value wasn't working.
+        playerTurn.innerHTML = `Player 2`;
+        playerTurn.style.color = 'black';
     } else {
-        player === 1
+        player--;
+        playerTurn.innerHTML = `Player 1`;
+        playerTurn.style.color = 'red';
     }
 }
 
 // Create function, that recognize when a column is click to run everything
-function handleGame() {
-    // Create a variable for the column that was clicked
-    let selectedColumn = document.getElementsByTagName("tr")
-    for (let i = 0; i < selectedColumn.length; i++) {
-        selectedColumn[i].addEventListener("click", (event) => {
-            console.log(
-                `${event.target.cellIndex}`
-            )
-        })
-
+function handleGame(column) {
+    let slot = { 
+        x: column,
+        y: addDiscToBoard(column)
     }
-    addDiscToBoard(selectedColumn);
-    checkForWin();
-    checkTie()
-    changePlayer()
-    
+    if (checkForWin(slot)) {
+        displayResult(true);
+    }
+    if (checkTie()) {
+        displayResult(false);
+    }
+    changePlayer();
 }
-console.log(handleGame())
+
+// inspire by Krystal Briggs
+let selectedColumn = document.getElementsByTagName("tr");
+for (let i = 0; i < selectedColumn.length; i++) {
+    selectedColumn[i].addEventListener("click", (event) => {
+        handleGame(event.target.cellIndex);
+    })
+}
 
 let button = document.querySelector('.button');
 button.addEventListener('click', reset);
